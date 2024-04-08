@@ -1,0 +1,9 @@
+.venv
+.git
+.gitignore
+media
+*media*
+static
+*static*
+db.sqlite
+*db.sqlite*
