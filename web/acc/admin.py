@@ -11,10 +11,10 @@ CustomUser= get_user_model()
 class CustomUserAdmin(UserAdmin):
     add_form= CustomUserCreationForm
     form= CustomUserChangeForm
-    models=CustomUserModel
+    models=CustomUser
     list_display= [
         "email",
-        "usename",
+        "username",
         "is_superuser"
     ]
 
