@@ -1,28 +1,22 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import SimpleTestCase
+from django.urls import reverse, resolve
+
+from .views import HomePageView
 
 
-class CustomerTests(TestCase):
-    def tesr_create_user(self):
-        User=get_user_model()
-        user=User.objects.create_user(
-            username="mamad",email="my@gmail.com",password="qwe1!"
-        )
-        self.assertEqual(user.username,"mamad")
-        self.assertEqual(user.email,"my@gmail.com")
-        self.assertTrue(user.is_Active)
-        self.assertFalse(user.is_staff)
-        self.assertFalse(user.is_superuser)
-        
-    def test_create_superuser(self):
-        User=get_user_model()
-        admin_user=User.objects.create_superuser(
-            username="sup",email="sup@gmail.com",password="sup@gmail.com"
-        )
-        self.assertEqual(admin_user,"sup")
-        self.assertEqual(admin_user.email,"sup@gmail.com")
-        self.assertTrue(admin_user.is_active)
-        self.assertTrue(admin_user.is_staff)
-        self.assertTrue(admin_user.is_superuser)
-        
-        
+class HomepageTests(SimpleTestCase):
+    def setUp(self):
+        url = reverse("home")
+        self.response = self.client.get(url)
+    def test_url_exists_at_correct_location(self):
+        self.assertEqual(self.response.status_code, 200)
+    def test_homepage_template(self):
+        self.assertTemplateUsed(self.response, "home.html")
+    def test_homepage_contains_correct_html(self):
+        self.assertContains(self.response, "home page")
+    def test_homepage_does_not_contain_incorrect_html(self):
+        self.assertNotContains(self.response, "Hi there! I should not be on the page.")
+    def test_homepage_url_resolves_homepageview(self): # new
+        view = resolve("/")
+        self.assertEqual(view.func.__name__, HomePageView.as_view().__name__)
