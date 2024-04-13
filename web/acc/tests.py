@@ -1,7 +1,9 @@
 from django.contrib.auth import get_user_model
-from django.test import SimpleTestCase
+from django.test import SimpleTestCase,TestCase
 from django.urls import reverse, resolve
 
+from .forms import CustomUserCreationForm 
+from .views import Signup
 from .views import HomePageView
 
 
@@ -20,3 +22,24 @@ class HomepageTests(SimpleTestCase):
     def test_homepage_url_resolves_homepageview(self): # new
         view = resolve("/")
         self.assertEqual(view.func.__name__, HomePageView.as_view().__name__)
+        
+        
+class CustomUserTests(TestCase):
+    def setUp(self) -> None:
+        url= reverse("signup")
+        self.response= self.client.get(url)
+        
+    def test_signup_template(self):
+        self.assertEqual(self.response.status_code,200)
+        self.assertTemplateUsed(self.response,"registration/signup.html")
+        self.assertContains(self.response,"Sign Up")
+        self.assertNotContains(self.response,"go out")
+        
+    def test_signup_form(self):
+        form= self.response.context.get("form")
+        self.assertIsInstance(form,CustomUserCreationForm)
+        self.assertContains(self.response,"csrfmiddlewaretoken")
+        
+    def test_signup_view(self):
+        view= resolve("/accounts/signup/")
+        self.assertEqual(view.func.__name__,Signup.as_view().__name__)
