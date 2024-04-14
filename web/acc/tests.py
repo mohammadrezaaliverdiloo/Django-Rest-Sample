@@ -23,8 +23,33 @@ class HomepageTests(SimpleTestCase):
         view = resolve("/")
         self.assertEqual(view.func.__name__, HomePageView.as_view().__name__)
         
+class SignupPageTests(TestCase):
+    
+    username= "newuser"
+    email= "newuser@gmail.com"
+    
+    def SetUp(self):
+        url= reverse("account_signup")
+        self.response= self.client.get(url)
         
-class CustomUserTests(TestCase):
+    def test_signup_template(self):
+        self.assertEqual(self.response.status_code,200)
+        self.assertTemplateUsed(self.response,"account/signup.html")
+        self.assertContains(self.response,"Sign Up")
+        self.assertNotContains(self.response,"Not true")
+        
+    def test_signup_form(self):
+        new_user= get_user_model().objects.create_user(self.username,self.email)
+        self.assertEqual(get_user_model().objects.all().count(),1)
+        self.assertEqual(get_user_model().objects.all()[0].username,self.username)
+        self.assertEqual(get_user_model().objects.all()[0].email,self.email)
+        
+    
+    
+    
+    
+    
+# class CustomUserTests(TestCase):
     def setUp(self) -> None:
         url= reverse("signup")
         self.response= self.client.get(url)

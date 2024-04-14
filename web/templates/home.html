@@ -5,10 +5,10 @@
 {% block content %}
 {% if user.is_authenticated %}
 {{user.email}}
-<p>go to <a href="{%url 'logout' %}">logout</a> page </p>
+<p>go to <a href="{%url 'account_logout' %}">logout</a> page </p>
 {% else %}
-<p>go to <a href="{%url 'login' %}">login</a> page </p>
-<p>go to <a href="{% url 'signup' %}">Sign Up</a>page</p>
+<p>go to <a href="{%url 'account_login' %}">login</a> page </p>
+<p>go to <a href="{% url 'account_signup' %}">Sign Up</a>page</p>
 {% endif %}
 <h1>This is our home page.</h1>
 {% endblock content %}
