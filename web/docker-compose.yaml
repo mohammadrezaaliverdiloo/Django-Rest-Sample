@@ -8,13 +8,19 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
       - db
+
+    environment:
+    - "SCEURE_SECRET=django-insecure-alu6xhd%l6+jlz*w(5-b%liatt5jwkts58(&-qi5nmcru)9j^v"
+    - DAJNGO_DEBUG="True"
+    
   
   db:
     image: postgres:alpine3.19
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     environment:  
-      - "POSTGRES_HOST_AUTH_METHOD=trust" 
+      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      # - DATABASE_URL="https//"
 
 volumes:
   postgres_data: 
