@@ -4,5 +4,7 @@ from .views import hello,hello2
 
 urlpatterns = [
     path('f/',hello,name="hello"),
-    path('p/',hello2,name="hello"),
+    path('f/uuid:pk>',hello,name="hello-detail"),
+    path('p/',hello2,name="helloo"),
+    path('p/<uuid:pk>',hello2,name="helloo-datail")
 ]
