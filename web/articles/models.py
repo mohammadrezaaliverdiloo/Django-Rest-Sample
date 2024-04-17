@@ -10,7 +10,8 @@ class Article(models.Model):
                     )
     title= models.CharField(max_length=255)
     content= models.TextField()
-    date=models.CharField(max_length=255,default="s")
+    date= models.CharField(max_length=255,default="s")
+    images= models.ImageField(upload_to="article_images/",blank=True,null=True)
     
     
     def __str__(self) -> str:

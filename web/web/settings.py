@@ -170,5 +170,7 @@ DEFAULT_FROM_EMAIL = "me@you.com"
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_-
 # PASSWORD, EMAIL_PORT,
+MEDIA_URL = "/media/" # new
+MEDIA_ROOT = BASE_DIR / "media" # new
 env = Env()
 env.read_env() 
