@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from environs import Env
+import socketc
 
 
 env= Env()
@@ -174,3 +175,6 @@ MEDIA_URL = "/media/" # new
 MEDIA_ROOT = BASE_DIR / "media" # new
 env = Env()
 env.read_env() 
+
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[:-1] + "1" for ip in ips]
